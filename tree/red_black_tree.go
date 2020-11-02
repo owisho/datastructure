@@ -6,6 +6,39 @@ type RedBlackTree struct {
 	root *RedBlackTreeNode
 }
 
+func (self *RedBlackTree) LayerPrint() {
+	nodes := make([]*RedBlackTreeNode, 1)
+	nodes[0] = self.root
+	layerPrint(nodes)
+}
+
+func layerPrint(nodes []*RedBlackTreeNode) {
+	if nodes == nil || len(nodes) == 0 {
+		return
+	}
+	childs := make([]*RedBlackTreeNode, len(nodes)*2)
+	i := 0
+	for _, node := range nodes {
+		if node == nil {
+			break
+		}
+		if node.leftChild != nil {
+			childs[i] = node.leftChild
+			i++
+		}
+		if node.rightChild != nil {
+			childs[i] = node.rightChild
+			i++
+		}
+		fmt.Print(node.data, ",")
+	}
+	if i == 0 {
+		return
+	}
+	fmt.Println()
+	layerPrint(childs)
+}
+
 func (self *RedBlackTree) ToString() {
 	toString(self.root)
 }

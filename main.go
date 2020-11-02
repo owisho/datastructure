@@ -2,6 +2,7 @@ package main
 
 import (
 	"datastructure/tree"
+	"fmt"
 )
 
 func main() {
@@ -18,4 +19,6 @@ func main() {
 	t.Insert(27)
 
 	t.ToString()
+	fmt.Println()
+	t.LayerPrint()
 }
