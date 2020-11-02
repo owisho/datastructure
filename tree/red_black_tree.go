@@ -80,21 +80,8 @@ func compareAndInsert(node *RedBlackTreeNode, data int) (bool, *RedBlackTreeNode
 			node.leftChild = nnode
 			adjustTree(nnode)
 			return true, nnode
-		} else if data < lcnode.data {
-			return compareAndInsert(lcnode, data)
-		} else if data == lcnode.data {
-			return false, lcnode
 		} else {
-			nnode := &RedBlackTreeNode{
-				data:       data,
-				isRed:      true,
-				parent:     node,
-				leftChild:  node.leftChild,
-				rightChild: nil,
-			}
-			node.leftChild = nnode
-			adjustTree(nnode)
-			return true, nnode
+			return compareAndInsert(lcnode, data)
 		}
 	}
 	if data > node.data {
@@ -110,21 +97,8 @@ func compareAndInsert(node *RedBlackTreeNode, data int) (bool, *RedBlackTreeNode
 			node.rightChild = nnode
 			adjustTree(nnode)
 			return true, nnode
-		} else if data > node.rightChild.data {
+		} else {
 			return compareAndInsert(node.rightChild, data)
-		} else if data == node.rightChild.data {
-			return false, node.rightChild
-		} else { // node.data < data < node.rightChild.data
-			nnode := &RedBlackTreeNode{
-				data:       data,
-				isRed:      true,
-				parent:     node,
-				leftChild:  nil,
-				rightChild: node.rightChild,
-			}
-			node.rightChild = nnode
-			adjustTree(nnode)
-			return true, nnode
 		}
 	}
 	fmt.Println("error status, all status should dealed before")
@@ -154,6 +128,7 @@ func adjustTree(node *RedBlackTreeNode) {
 		if (node.data < parent.data && parent.data < gp.data) ||
 			(node.data > parent.data && parent.data > gp.data) {
 
+			adjustGPParentChild(parent, gp)
 			if node.data < parent.data {
 				rightRotate(parent, gp)
 			} else {
@@ -165,17 +140,30 @@ func adjustTree(node *RedBlackTreeNode) {
 				parent.rightChild = node.leftChild
 				node.leftChild = parent
 				parent.parent = node
+				adjustGPParentChild(node, gp)
 				rightRotate(node, gp)
 			} else {
 				node.parent = gp
 				parent.leftChild = node.rightChild
 				node.rightChild = parent
 				parent.parent = node
+				adjustGPParentChild(node, gp)
 				leftRotate(node, gp)
 			}
 		}
 	}
 
+}
+
+func adjustGPParentChild(parent, gp *RedBlackTreeNode) {
+	if gp.parent == nil {
+		return
+	}
+	if gp.parent.rightChild != nil && gp.parent.rightChild.data == gp.data {
+		gp.parent.rightChild = parent
+	} else {
+		gp.parent.leftChild = parent
+	}
 }
 
 func rightRotate(parent, gp *RedBlackTreeNode) {

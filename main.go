@@ -11,11 +11,11 @@ func main() {
 	t.Insert(8)
 	t.Insert(11)
 	t.Insert(13)
-	//t.Insert(17)
-	//t.Insert(15)
-	//t.Insert(25)
-	//t.Insert(22)
-	//t.Insert(27)
+	t.Insert(17)
+	t.Insert(15)
+	t.Insert(25)
+	t.Insert(22)
+	t.Insert(27)
 
 	t.ToString()
 }
