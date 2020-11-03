@@ -63,14 +63,6 @@ func toString(node *RedBlackTreeNode) {
 	}
 }
 
-func (self *RedBlackTree) rotateLeft() {
-
-}
-
-func (self *RedBlackTree) rotateRight() {
-
-}
-
 func (self *RedBlackTree) Insert(data int) (bool, *RedBlackTreeNode) {
 	if self.root == nil {
 		self.root = &RedBlackTreeNode{
