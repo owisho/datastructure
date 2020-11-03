@@ -21,4 +21,23 @@ func main() {
 	t.ToString()
 	fmt.Println()
 	t.LayerPrint()
+	fmt.Println()
+
+	t.Delete(1)
+	t.ToString()
+	fmt.Println()
+	t.LayerPrint()
+	fmt.Println()
+
+	t.Insert(4)
+	t.Insert(19)
+	t.Insert(21)
+	t.Insert(23)
+	t.Insert(14)
+
+	t.ToString()
+	fmt.Println()
+	t.LayerPrint()
+	fmt.Println()
+
 }

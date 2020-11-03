@@ -121,7 +121,12 @@ func search(node *RedBlackTreeNode, data int) *RedBlackTreeNode {
 	}
 }
 
-func (self *RedBlackTree) delete(data int) bool {
-	//TODO
-	return false
+func (self *RedBlackTree) Delete(data int) bool {
+	delNode := self.search(data)
+	if delNode == nil {
+		return false
+	} else {
+		delNode.delete()
+		return true
+	}
 }

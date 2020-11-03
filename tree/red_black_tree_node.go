@@ -107,7 +107,6 @@ func (self *RedBlackTreeNode) leftRotate() {
 	self.leftChild = parent
 	parent.isRed = true
 	self.isRed = false
-
 }
 
 //当前节点是左旋的中间节点
@@ -139,5 +138,48 @@ func (self *RedBlackTreeNode) getUncle() *RedBlackTreeNode {
 		return gp.rightChild
 	} else {
 		return gp.leftChild
+	}
+}
+
+func (self *RedBlackTreeNode) delete() {
+	next := self.findNext()
+	if next == nil {
+		parent := self.parent
+		parent.rightChild = nil
+		if parent.isRed {
+			parent.isRed = false
+			parent.leftChild.isRed = true
+		}
+	} else {
+		self.data = next.data
+		next.delete()
+	}
+}
+
+//查找后继节点（给删除使用)
+func (self *RedBlackTreeNode) findNext() *RedBlackTreeNode {
+	if self.rightChild != nil {
+		return self.rightChild.findMin()
+	} else {
+		return self.findSmallestParent()
+	}
+}
+
+func (self *RedBlackTreeNode) findSmallestParent() *RedBlackTreeNode {
+	p := self.parent
+	for p != nil {
+		if p.data > self.data {
+			return p
+		}
+		p = p.parent
+	}
+	return nil
+}
+
+func (self *RedBlackTreeNode) findMin() *RedBlackTreeNode {
+	if self.leftChild != nil {
+		return self.leftChild.findMin()
+	} else {
+		return self
 	}
 }
